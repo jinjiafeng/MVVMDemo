@@ -1,7 +1,7 @@
 package com.jjf.mvvm.di.module;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
 
 import com.jjf.mvvm.ui.main.MainViewModel;
 
@@ -15,10 +15,10 @@ import dagger.Provides;
  */
 
 @Module
-public class ViewModel {
+public class ViewModelInjectModel {
 
     @Provides
-    public MainViewModel provideViewModel(AppCompatActivity activity){
+    public MainViewModel provideViewModel(FragmentActivity activity){
         return ViewModelProviders.of(activity).get(MainViewModel.class);
     }
 }

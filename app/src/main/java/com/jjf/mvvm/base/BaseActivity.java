@@ -1,73 +1,71 @@
 package com.jjf.mvvm.base;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
+import android.graphics.Color;
+import android.support.design.widget.Snackbar;
+import android.view.View;
+import android.widget.TextView;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import com.jjf.mvvm.App;
+import com.jjf.mvvm.R;
+import com.jjf.mvvm.di.component.ActivityComponent;
+import com.jjf.mvvm.di.component.DaggerActivityComponent;
+import com.jjf.mvvm.di.module.ActivityModule;
+import com.jjf.mvvm.util.ToastUtils;
 
 /**
  * @author :jinjiafeng
  * date:  on 18-8-29
  * description:
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AbstractActivity {
 
-    private Unbinder mUnbinder;
-    protected Context mContext;
+    private ActivityComponent mActivityComponent;
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(getLayoutId());
-        mUnbinder = ButterKnife.bind(this);
-        mContext = this;
-        initView();
-        initEventAndData();
+    protected void initView() {
+        mActivityComponent = DaggerActivityComponent.builder()
+                .appComponent(App.getInstance().getAppComponent())
+                .activityModule(new ActivityModule(this)).build();
+        initInject();
+    }
+
+    public ActivityComponent getActivityComponent() {
+        return mActivityComponent;
     }
 
     /**
-     * 设置layout布局，在子类重写
-     *
-     * @return 布局id
+     * 实现注入此Activity,子类必须实现
      */
-    protected abstract int getLayoutId();
+    protected abstract void initInject();
 
-    /**
-     * 初始化视图,在子类重写
-     */
-    protected abstract void initView();
+    public void showErrorMsg(int resId) {
+        showErrorMsg(getString(resId));
+    }
 
-    /**
-     * 初始化数据,在子类重写
-     */
-    protected abstract void initEventAndData();
 
-    @Override
-    protected void onDestroy() {
-        if (mUnbinder != null) {
-            mUnbinder.unbind();
-            mUnbinder = null;
+    public void showErrorMsg(String message) {
+        if (message != null) {
+            showSnackBar(message);
+        } else {
+            showSnackBar(getString(R.string.some_error));
         }
-        super.onDestroy();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-            default:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
+    private void showSnackBar(String message) {
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),
+                message, Snackbar.LENGTH_SHORT);
+        View sbView = snackbar.getView();
+        TextView textView = sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
+        snackbar.show();
     }
 
-    protected void startActivity(Class<? extends Activity> cls) {
-        startActivity(new Intent(this, cls));
+    public void showMessage(String message) {
+        ToastUtils.showShort(message);
     }
+
+    public void showMessage(int resId) {
+        ToastUtils.showShort(resId);
+    }
+
 }

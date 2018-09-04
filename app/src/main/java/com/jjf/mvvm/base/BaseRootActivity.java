@@ -18,7 +18,7 @@ import static com.jjf.mvvm.data.http.Resource.Status.SUCCESS;
  * date:  on 18-8-30
  * description: 根据不同的状态 loading , error or main 加载不同的视图
  */
-public abstract class BaseRootActivity<VM extends BaseViewModel> extends BaseMvpActivity {
+public abstract class BaseRootActivity<VM extends BaseViewModel> extends BaseActivity {
     @Inject
     VM viewModel;
     private ImageView ivLoading;
@@ -70,14 +70,13 @@ public abstract class BaseRootActivity<VM extends BaseViewModel> extends BaseMvp
         });
     }
 
-    @Override
     public void stateError() {
         if (currentState == SUCCESS) {
             return;
         }
         if (!isErrorViewAdded) {
             isErrorViewAdded = true;
-            View.inflate(mContext, mErrorResource, mParent);
+            View.inflate(getApplicationContext(), mErrorResource, mParent);
             viewError = mParent.findViewById(R.id.view_error);
             if (viewError == null) {
                 throw new IllegalStateException(
@@ -89,7 +88,6 @@ public abstract class BaseRootActivity<VM extends BaseViewModel> extends BaseMvp
         viewError.setVisibility(View.VISIBLE);
     }
 
-    @Override
     public void stateLoading() {
         if (currentState == LOADING) {
             return;
@@ -99,7 +97,6 @@ public abstract class BaseRootActivity<VM extends BaseViewModel> extends BaseMvp
         viewLoading.setVisibility(View.VISIBLE);
     }
 
-    @Override
     public void stateMain() {
         if (currentState == SUCCESS) {
             return;

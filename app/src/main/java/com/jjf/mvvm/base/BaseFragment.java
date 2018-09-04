@@ -11,6 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jjf.mvvm.App;
+import com.jjf.mvvm.di.component.DaggerFragmentComponent;
+import com.jjf.mvvm.di.component.FragmentComponent;
+import com.jjf.mvvm.di.module.FragmentModule;
 import com.squareup.leakcanary.RefWatcher;
 
 import butterknife.ButterKnife;
@@ -32,6 +35,12 @@ public abstract class BaseFragment extends Fragment {
         mActivity = (Activity) context;
         mContext = context;
         super.onAttach(context);
+    }
+
+    public FragmentComponent getFragmentComponent(){
+        return DaggerFragmentComponent.builder().appComponent(App.getInstance().getAppComponent())
+                .fragmentModule(new FragmentModule(this))
+                .build();
     }
 
     @Nullable
