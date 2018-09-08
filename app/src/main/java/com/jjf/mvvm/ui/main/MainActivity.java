@@ -3,7 +3,7 @@ package com.jjf.mvvm.ui.main;
 import android.widget.TextView;
 
 import com.jjf.mvvm.R;
-import com.jjf.mvvm.base.BaseMvpActivity;
+import com.jjf.mvvm.base.BaseActivity;
 
 import javax.inject.Inject;
 
@@ -12,7 +12,7 @@ import javax.inject.Inject;
  * date:  on 18-8-29
  * description:
  */
-public class MainActivity extends BaseMvpActivity {
+public class MainActivity extends BaseActivity {
 
     @Inject
     MainViewModel mViewModel;
@@ -39,6 +39,5 @@ public class MainActivity extends BaseMvpActivity {
     public void showContent(String msg) {
         TextView textView = findViewById(R.id.tv_text);
         textView.setText(msg);
-        showMessage(msg);
     }
 }

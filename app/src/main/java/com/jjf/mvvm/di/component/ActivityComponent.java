@@ -1,9 +1,9 @@
 package com.jjf.mvvm.di.component;
 
-import com.jjf.mvvm.di.module.ViewModel;
-import com.jjf.mvvm.ui.main.MainActivity;
 import com.jjf.mvvm.di.ActivityScope;
 import com.jjf.mvvm.di.module.ActivityModule;
+import com.jjf.mvvm.di.module.ViewModelInjectModel;
+import com.jjf.mvvm.ui.main.MainActivity;
 
 import dagger.Component;
 
@@ -13,7 +13,7 @@ import dagger.Component;
  * description:
  */
 @ActivityScope
-@Component(dependencies ={ AppComponent.class}, modules = {ActivityModule.class, ViewModel.class})
+@Component(dependencies ={ AppComponent.class}, modules = {ActivityModule.class, ViewModelInjectModel.class})
 public interface ActivityComponent {
     void inject(MainActivity activity);
 }

@@ -15,6 +15,7 @@ buildscript {
         daggerVersion = '2.16'
         rxjavaVersion = '2.1.12'
         rxandroidVersion = '2.0.2'
+        rxPermissionVersion = '0.10.2'
         retrofitVersion = '2.4.0'
         interceptorVersion = '3.10.0'
         glideVersion = '4.7.1'
@@ -42,6 +43,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven { url 'https://jitpack.io' }
     }
 }
 

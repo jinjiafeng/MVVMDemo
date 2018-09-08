@@ -11,7 +11,7 @@ import com.jjf.mvvm.data.http.Resource;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
-/**
+/**@author jinjiafeng
  * Created by jinjiafeng
  * Time :2018/9/1
  */
