@@ -29,10 +29,10 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initEventAndData() {
-        findViewById(R.id.tv_text).setOnClickListener(v ->mViewModel.sendMessage());
-
-        mViewModel.mMsgLiveData.observe(this,aLong -> {
-            showContent(aLong +"");
+        getLifecycle().addObserver(mViewModel);
+        findViewById(R.id.tv_text).setOnClickListener(v -> mViewModel.sendMessage());
+        mViewModel.mMsgLiveData.observe(this, aLong -> {
+            showContent(aLong + "");
         });
     }
 
