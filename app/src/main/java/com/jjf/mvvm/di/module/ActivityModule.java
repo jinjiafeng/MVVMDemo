@@ -27,7 +27,6 @@ public class ActivityModule {
         return mActivity;
     }
 
-
     @Provides
     LinearLayoutManager provideLinearLayoutManager(FragmentActivity activity) {
         return new LinearLayoutManager(activity);

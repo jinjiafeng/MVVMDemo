@@ -1,7 +1,5 @@
 package com.jjf.mvvm.ui.main;
 
-import android.arch.lifecycle.Observer;
-import android.support.annotation.Nullable;
 import android.widget.TextView;
 
 import com.jjf.mvvm.R;
@@ -31,15 +29,10 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initEventAndData() {
-        findViewById(R.id.tv_text).setOnClickListener(v ->mViewModel.sendMessage());
-        mViewModel.mMsgLiveData.observe(this, new Observer<Long>() {
-            @Override
-            public void onChanged(@Nullable Long aLong) {
-                
-            }
-        });
-        mViewModel.mMsgLiveData.observe(this,aLong -> {
-            showContent(aLong +"");
+        getLifecycle().addObserver(mViewModel);
+        findViewById(R.id.tv_text).setOnClickListener(v -> mViewModel.sendMessage());
+        mViewModel.mMsgLiveData.observe(this, aLong -> {
+            showContent(aLong + "");
         });
     }
 
