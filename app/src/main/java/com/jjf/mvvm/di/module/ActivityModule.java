@@ -1,6 +1,6 @@
 package com.jjf.mvvm.di.module;
 
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.jjf.mvvm.di.ActivityScope;
@@ -15,21 +15,21 @@ import dagger.Provides;
  */
 @Module
 public class ActivityModule {
-    private final AppCompatActivity mActivity;
+    private final FragmentActivity mActivity;
 
-    public ActivityModule(AppCompatActivity activity) {
+    public ActivityModule(FragmentActivity activity) {
         this.mActivity = activity;
     }
 
     @ActivityScope
     @Provides
-    public AppCompatActivity provideActivity(){
+    public FragmentActivity provideActivity(){
         return mActivity;
     }
 
 
     @Provides
-    LinearLayoutManager provideLinearLayoutManager(AppCompatActivity activity) {
+    LinearLayoutManager provideLinearLayoutManager(FragmentActivity activity) {
         return new LinearLayoutManager(activity);
     }
 }
